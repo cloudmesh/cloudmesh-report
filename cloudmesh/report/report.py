@@ -34,28 +34,28 @@ class Report:
         """)
 
     def generate_image(self,
-                       filename,
+                       image,
                        caption=None,
                        label=None,
                        ):
         if caption is None:
-            caption = filename
+            caption = image
         if label is None:
             label = f"fig:{self.counter}"
         image = \
-            textwrap.dedent("""
+            textwrap.dedent(f"""
               \\begin{{figure}}
               \\centering
-              \\includegraphics{({filename)}}
+              \\includegraphics{{{image}}}
               \\caption{{{caption}}}
-              \\label{{fig:{filename}}}
-              \\end{figure}
+              \\label{{{label}}}
+              \\end{{figure}}
               """)
         self.counter = self.counter + 1
         return image
 
     def __init__(self, directory="./", config=None):
-        self.counter = 0
+        self.counter = 1
         self.config = config
         self.directory = directory
 
@@ -74,6 +74,25 @@ class Report:
                 print (f"\\maketitle{{{section}}}")
             else:
                 print(f"\\section{{{section}}}")
+
+                images = self.content[section]
+                if images is not None:
+                    for image in images:
+                        if "label" in image:
+                            label = image["label"]
+                        else:
+                            label = None
+                        if "caption" in image:
+                            caption = image["caption"]
+                        else:
+                            caption = None
+                        output = self.generate_image(
+                            image["image"],
+                            label=label,
+                            caption=caption
+                        )
+                        print (output)
+
 
         print(self.end_document)
 
