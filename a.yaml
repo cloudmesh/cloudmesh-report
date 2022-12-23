@@ -1,0 +1,15 @@
+title: My report
+introduction:
+  - this-is-a-good-filename1.pdf:
+    caption: my fig 1
+    label: "fig:1"
+  - this-is-a-good-filename2.pdf:
+    caption: my fig 2
+    label: "fig:2"
+  - this-is-a-good-filename3.pdf:
+  - this-is-a-good-filename4.pdf:
+benchmark:
+  - this-is-a-good-filename5.pdf:
+    caption: my fig 5
+    label: "fig:5"
+  - this-is-a-good-filename6.pdf:

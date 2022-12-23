@@ -5,14 +5,14 @@ from cloudmesh.common.FlatDict import read_config_parameters
 testcase = """
 title: My report
 introduction:
-   - this-is-a-good-filename1.pdf
-     - caption: my fig 1
-     - label: "fig:1"
-   - this-is-a-good-filename2.pdf
-     - caption: my fig 2
-     - label: "fig:2"
-   - this-is-a-good-filename3.pdf
-   - this-is-a-good-filename4.pdf
+  - this-is-a-good-filename1.pdf:
+    caption: my fig 1
+    label: "fig:1"
+  - this-is-a-good-filename2.pdf:
+    caption: my fig 2
+    label: "fig:2"
+  - this-is-a-good-filename3.pdf:
+  - this-is-a-good-filename4.pdf:
 """
 
 class Report:
@@ -69,9 +69,12 @@ class Report:
       # TBD Vagul
       config_dict = read_config_parameters(filename)
       title = config_dict["title"]
+
       images = []
       for key in config_dict["introduction"]:
-        images.append(config_dict)
+        images.append(config_dict["introduction"][key])
+
+      return title, images
 
 
 
