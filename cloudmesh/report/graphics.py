@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
+from cloudmesh.common.Shell import Shell
 
 def export_figure(
         basename="abc",
-        directory= "./",
+        directory= "./images",
         kind="svg,pdf,png",
         title=None,
         x=None,
@@ -65,9 +66,13 @@ def export_figure(
     ax.tick_params(axis='both', which='major', labelsize=axis_font)
     ax.tick_params(axis='both', which='minor', labelsize=axis_font)
 
+    if directory is None:
+        directory = "./"
+    Shell.mkdir(directory)
+
     for f in output_format:
         if f in output_format and f == "png":
-            plt.savefig(f"./images/{basename}.{f}", dpi=dpi, bbox_inches="tight")
+            plt.savefig(f"{directory}/{basename}.{f}", dpi=dpi, bbox_inches="tight")
         else:
-            plt.savefig(f"./images/{basename}.{f}", bbox_inches="tight")
+            plt.savefig(f"{directory}/{basename}.{f}", bbox_inches="tight")
     return plt, ax
