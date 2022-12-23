@@ -15,69 +15,64 @@ introduction:
   - this-is-a-good-filename4.pdf:
 """
 
+
 class Report:
+    begin_document = \
+        textwrap.dedent("""
+        \\documentclass{article}
+    
+        \\usepackage{graphicx}
+    
+        \\begin{document}
+        """)
 
-  begin_document = \
-    textwrap.dedent("""
-    \documentclass{article}
+    end_document = \
+        textwrap.dedent("""
+        \\end{document}
+        """)
 
-    \usepackage{graphicx}
+    def generate_image(self,
+                       filename,
+                       caption=None,
+                       label=None,
+                       ):
+        if caption is None:
+            caption = filename
+        if label is None:
+            label = f"fig:{self.counter}"
+        image = \
+            textwrap.dedent("""
+              \\begin{{figure}}
+              \\centering
+              \\includegraphics{({filename)}}
+              \\caption{{{caption}}}
+              \\label{{fig:{filename}}}
+              \\end{figure}
+              """)
+        self.counter = self.counter + 1
+        return image
 
-    \begin{document}
-    """)
+    def __init__(self, directory="./", config=None):
+        self.counter = 0
+        self.config = config
+        self.directory = directory
 
-  end_document = \
-    textwrap.dedent("""
-    \end{document}
-    """
+    def generate(self):
+        # mages = determin list of image of image files
+        # for i in self.images:
+        #   self.generate_image(images.)
+        #   filename =  put value here and derive from images
+        print(self.begin_document)
+        print(self.end_document)
 
-  def generate_image(self,
-                     filename,
-                     caption=None,
-                     label=None,
-                     ):
-    if caption is None:
-      caption = filename
-    if label is None:
-      label = f"fig:{self.counter}"
-    image = \
-      textwrap.dedent("""
-      \begin{{figure}}
-      \centering
-      \includegraphics{({filename)}}
-      \caption{{{caption}}}
-      label{{fig:{filename}}}
-      \end{figure}
-      """)
-    self.counter = self.counter + 1
-    return image
+    def read_config(self):
+        filename = self.config
+        # TBD Vagul
+        config_dict = read_config_parameters(filename)
+        title = config_dict["title"]
 
-  def __init__(self, directory="./", config):
-    self.counter = 0
-    self.config = config
-    self.directory = directory
+        images = []
+        for key in config_dict["introduction"]:
+            images.append(config_dict["introduction"][key])
 
-  def generate(self):
-    #mages = determin list of image of image files
-    for i in self.images:
-      self.generate_image(images.)
-      filename =  put value here and derive from images
-
-
-  def read_config(self):
-      filename = self.config
-      # TBD Vagul
-      config_dict = read_config_parameters(filename)
-      title = config_dict["title"]
-
-      images = []
-      for key in config_dict["introduction"]:
-        images.append(config_dict["introduction"][key])
-
-      return title, images
-
-
-
-
-
-
+        return title, images

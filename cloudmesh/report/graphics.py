@@ -1,15 +1,17 @@
 import matplotlib.pyplot as plt
+
 from cloudmesh.common.Shell import Shell
+
 
 def export_figure(
         basename="abc",
-        directory= "./images",
+        directory="./images",
         kind="svg,pdf,png",
         title=None,
         x=None,
         y=None,
         axis_font=12,
-        size=[8,8],
+        size=[8, 8],
         x_range=None,
         y_range=None,
         visible_xaxis=None,
@@ -49,7 +51,7 @@ def export_figure(
 
     frame1 = plt.gca()
     frame1.axes.get_xaxis().set_visible(visible_xaxis)
-    fig.set_size_inches(size[0],size[1])
+    fig.set_size_inches(size[0], size[1])
     if title is not None:
         fig.suptitle(title, fontsize=axis_font)
 

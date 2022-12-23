@@ -1,13 +1,7 @@
-from cloudmesh.shell.command import command
-from cloudmesh.shell.command import PluginCommand
-from cloudmesh.common.console import Console
-from cloudmesh.common.util import path_expand
-from pprint import pprint
 from cloudmesh.common.debug import VERBOSE
-from cloudmesh.shell.command import map_parameters
-from cloudmesh.common.parameter import Parameter
-from cloudmesh.common.variables import Variables
-from cloudmesh.common.util import banner
+from cloudmesh.shell.command import PluginCommand
+from cloudmesh.shell.command import command
+
 
 class ReportCommand(PluginCommand):
 
@@ -34,16 +28,15 @@ class ReportCommand(PluginCommand):
 
         """
 
-
         # map_parameters(arguments, "FILE")
 
         VERBOSE(arguments)
 
-        from cloudmesh.common.report.report import Report
+        from cloudmesh.report.report import Report
 
         filename = arguments["FILE"]
 
-        r = Report(filename=filename)
-        r.generate(filename)
+        r = Report(config=filename)
+        r.generate()
 
         return ""
