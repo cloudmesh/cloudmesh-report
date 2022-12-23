@@ -39,6 +39,11 @@ class ReportCommand(PluginCommand):
 
         VERBOSE(arguments)
 
+        from cloudmesh.common.report.report import Report
+
+        filename = arguments["FILE"]
+
         r = Report(filename=filename)
+        r.generate(filename)
 
         return ""
