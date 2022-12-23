@@ -1,6 +1,8 @@
 import textwrap
-
+import yaml
 from cloudmesh.common.FlatDict import read_config_parameters
+from cloudmesh.common.util import readfile
+from pprint import pprint
 
 testcase = """
 title: My report
@@ -58,21 +60,27 @@ class Report:
         self.directory = directory
 
     def generate(self):
+        self.read_config()
         # mages = determin list of image of image files
         # for i in self.images:
         #   self.generate_image(images.)
         #   filename =  put value here and derive from images
         print(self.begin_document)
+
+        pprint (self.content)
+
+        for section in self.content:
+            if section in "title":
+                print (f"\\maketitle{{{section}}}")
+            else:
+                print(f"\\section{{{section}}}")
+
         print(self.end_document)
 
     def read_config(self):
         filename = self.config
         # TBD Vagul
-        config_dict = read_config_parameters(filename)
-        title = config_dict["title"]
+        content = readfile(self.config)
+        self.content = yaml.safe_load(content)
 
-        images = []
-        for key in config_dict["introduction"]:
-            images.append(config_dict["introduction"][key])
 
-        return title, images
