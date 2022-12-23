@@ -18,48 +18,22 @@ class ReportCommand(PluginCommand):
         ::
 
           Usage:
-                report --file=FILE
-                report list
-                report [--parameter=PARAMETER] [--experiment=EXPERIMENT] [COMMAND...]
+                report FILE
 
-          This command does some useful things.
+          This command generates a report based on a yaml file that specifies images
 
           Arguments:
               FILE   a file name
-              PARAMETER  a parameterized parameter of the form "a[0-3],a5"
 
           Options:
               -f      specify the file
 
           Description:
 
-            > cms report --parameter="a[1-2,5],a10"
-            >    example on how to use Parameter.expand. See source code at
-            >      https://github.com/cloudmesh/cloudmesh-report/blob/main/cloudmesh/report/command/report.py
-            >    prints the expanded parameter as a list
-            >    ['a1', 'a2', 'a3', 'a4', 'a5', 'a10']
-
-            > report exp --experiment=a=b,c=d
-            > example on how to use Parameter.arguments_to_dict. See source code at
-            >      https://github.com/cloudmesh/cloudmesh-report/blob/main/cloudmesh/report/command/report.py
-            > prints the parameter as dict
-            >   {'a': 'b', 'c': 'd'}
+            > cms report config.yaml
 
         """
 
-
-        # arguments.FILE = arguments['--file'] or None
-
-        # switch debug on
-
-        variables = Variables()
-        variables["debug"] = True
-
-        banner("original arguments", color="RED")
-
-        VERBOSE(arguments)
-
-        banner("rewriting arguments so we can use . notation for file, parameter, and experiment", color="RED")
 
         map_parameters(arguments, "file", "parameter", "experiment")
 
